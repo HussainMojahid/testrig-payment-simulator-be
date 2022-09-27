@@ -1,0 +1,16 @@
+{
+  "additionalData": {
+    "scaExemptionRequested": "transactionRiskAnalysis"
+  },
+  "pspReference": "D787PCNXTSGLNK82",
+  "resultCode": "Authorised",
+  "amount": {
+    "currency": "USD",
+    "value": 1000
+  },
+  "merchantReference": "Your order number",
+  "paymentMethod": {
+    "brand": "visa",
+    "type": "scheme"
+  }
+}
