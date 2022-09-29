@@ -1,0 +1,10 @@
+{
+	"additionalData": {
+		"scaExemptionRequested": "transactionRiskAnalysis"
+	},
+	"pspReference": "D2K3D629CV5X8N82",
+	"refusalReason": "Expired Card",
+	"resultCode": "Refused",
+	"refusalReasonCode": "6",
+	"merchantReference": "Your order number"
+}

@@ -2,6 +2,7 @@ package com.testrig.simulator.utils;
 
 import java.io.IOException;
 
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
@@ -10,11 +11,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonUtils {
 
-	public static Object readJson() {
+	public static Object readPaymentMethodJson() {
+		String filePath = "./validation-data/payment-method.json";
+		return readJson(filePath);
+	}
+	
+	public static Object readPaymentSuccessResponseJson() {
+		String filePath = "./response/payment-success-response.json";
+		return readJson(filePath);
+	}
+	
+	public static Object readPaymentErrorResponseJson() {
+		String filePath = "./response/payment-error-response.json";
+		return readJson(filePath);
+	}
+	
+	private static Object readJson(String filePath) {
 		Object pojo = null;
 		try {
-			pojo = new ObjectMapper().readValue(new ClassPathResource("./response/payment-response.json").getFile(),
-					Object.class);
+			pojo = new ObjectMapper().readValue(new ClassPathResource(filePath).getFile(), Object.class);
 		} catch (StreamReadException e) {
 			e.printStackTrace();
 		} catch (DatabindException e) {
