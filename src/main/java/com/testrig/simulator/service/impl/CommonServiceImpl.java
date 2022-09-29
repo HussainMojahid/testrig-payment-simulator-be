@@ -1,5 +1,7 @@
 package com.testrig.simulator.service.impl;
 
+import java.util.Date;
+
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -7,11 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.testrig.simulator.response.AdditionalDataResponse;
 import com.testrig.simulator.response.AmountResponse;
+import com.testrig.simulator.response.ExpiredCardErrorResponse;
 import com.testrig.simulator.response.PaymentErrorResponse;
 import com.testrig.simulator.response.PaymentMethodResponse;
 import com.testrig.simulator.response.PaymentSuccessResponse;
 import com.testrig.simulator.service.CommonService;
 import com.testrig.simulator.utils.ApplicationConstants;
+import com.testrig.simulator.utils.DateUtil;
 import com.testrig.simulator.utils.JsonUtils;
 
 @Service
@@ -122,6 +126,30 @@ public class CommonServiceImpl implements CommonService {
 				ApplicationConstants.CARD_NUMBER_NOT_VALID_ERROR_CODE, 
 				ApplicationConstants.CARD_NUMBER_NOT_VALID_MESSAGE, 
 				ApplicationConstants.CARD_NUMBER_NOT_VALID_ERROR_TYPE);
+	}
+
+	@Override
+	public boolean validateCardExpiry(JSONObject reqJsonObject) throws JSONException {
+		String dateStr = reqJsonObject.getJSONObject("paymentMethod").getString("expiryMonth") + "/"
+				+ reqJsonObject.getJSONObject("paymentMethod").getString("expiryYear");
+		Date expiryDate = DateUtil.parseMYDate(dateStr);
+		if (expiryDate.before(new Date())) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public ExpiredCardErrorResponse generateExpiredCardErrorResponse(JSONObject jsonReqObject) throws JSONException {
+		AdditionalDataResponse additionalData = new AdditionalDataResponse();
+		additionalData.setScaExemptionRequested("transactionRiskAnalysis");
+		
+		return new ExpiredCardErrorResponse(additionalData, 
+				ApplicationConstants.CARD_EXPIRY_PSP_REFERENCE, 
+				ApplicationConstants.CARD_EXPIRY_REFUSAL_REASON, 
+				ApplicationConstants.CARD_EXPIRY_RESULT_CODE,
+				ApplicationConstants.CARD_EXPIRY_REFUSAL_REASON_CODE,
+				jsonReqObject.getString("reference"));
 	}
 
 }

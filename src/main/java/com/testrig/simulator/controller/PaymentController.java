@@ -31,12 +31,7 @@ public class PaymentController {
 	public Object payment(@RequestBody Object requestObject) throws Exception {
 		String reqJsonString = JsonUtils.objectToJsonString(requestObject);
 		JSONObject reqJsonObject= new JSONObject(reqJsonString);
-		
-		String dateStr = reqJsonObject.getJSONObject("paymentMethod").getString("expiryMonth") +"/"+ reqJsonObject.getJSONObject("paymentMethod").getString("expiryYear");
-		System.out.println("dateStr: "+dateStr);
-		Date date = DateUtil.parseMYDate(dateStr);
-		System.out.println("date: "+date);
-		
+
 		boolean isPaymentMethodValid = commonService.validatePaymentMethod(reqJsonObject.getJSONObject("paymentMethod").getString("type"));
 		if(!isPaymentMethodValid) {
 			return commonService.generatePaymentMethodErrorResponse();
@@ -46,6 +41,8 @@ public class PaymentController {
 			return commonService.generateCvcErrorResponse();
 		} else if (!commonService.validateCardNumber(reqJsonObject.getJSONObject("paymentMethod").getString("number"))) {
 			return commonService.generateCardNumberErrorResponse();
+		} else if (!commonService.validateCardExpiry(reqJsonObject)) {
+			return commonService.generateExpiredCardErrorResponse(reqJsonObject);
 		}
 		return commonService.generatePaymentSuccessResponse(reqJsonObject);
 	}

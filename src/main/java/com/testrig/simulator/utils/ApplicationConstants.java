@@ -22,4 +22,10 @@ public interface ApplicationConstants {
 	public static final String CARD_NUMBER_NOT_VALID_ERROR_CODE = "101";
 	public static final String CARD_NUMBER_NOT_VALID_ERROR_TYPE = "validation";
 	public static final String CARD_NUMBER_NOT_VALID_MESSAGE = "Invalid card number";
+	
+	public static final String CARD_EXPIRY_PSP_REFERENCE = "CN6S26C2VSGLNK82";
+	public static final String CARD_EXPIRY_REFUSAL_REASON = "Expired Card";
+	public static final String CARD_EXPIRY_RESULT_CODE = "Refused";
+	public static final String CARD_EXPIRY_REFUSAL_REASON_CODE = "6";
+	
 }
