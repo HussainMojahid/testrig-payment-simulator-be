@@ -27,24 +27,24 @@ public class PaymentController {
 		return JsonUtils.readPaymentSuccessResponseJson();
 	}
 	
-	@PostMapping("/payments")
-	public Object payment(@RequestBody Object requestObject) throws Exception {
-		String reqJsonString = JsonUtils.objectToJsonString(requestObject);
-		JSONObject reqJsonObject= new JSONObject(reqJsonString);
+	// @PostMapping("/payments")
+	// public Object payment(@RequestBody Object requestObject) throws Exception {
+	// 	String reqJsonString = JsonUtils.objectToJsonString(requestObject);
+	// 	JSONObject reqJsonObject= new JSONObject(reqJsonString);
 
-		boolean isPaymentMethodValid = commonService.validatePaymentMethod(reqJsonObject.getJSONObject("paymentMethod").getString("type"));
-		if(!isPaymentMethodValid) {
-			return commonService.generatePaymentMethodErrorResponse();
-		} else if (!commonService.validateCurrency(reqJsonObject.getJSONObject("amount").getString("currency"))) {
-			return commonService.generateCurrencyErrorResponse();
-		} else if (!commonService.validateCvc(reqJsonObject.getJSONObject("paymentMethod").getString("cvc"))) {
-			return commonService.generateCvcErrorResponse();
-		} else if (!commonService.validateCardNumber(reqJsonObject.getJSONObject("paymentMethod").getString("number"))) {
-			return commonService.generateCardNumberErrorResponse();
-		} else if (!commonService.validateCardExpiry(reqJsonObject)) {
-			return commonService.generateExpiredCardErrorResponse(reqJsonObject);
-		}
-		return commonService.generatePaymentSuccessResponse(reqJsonObject);
-	}
+	// 	boolean isPaymentMethodValid = commonService.validatePaymentMethod(reqJsonObject.getJSONObject("paymentMethod").getString("type"));
+	// 	if(!isPaymentMethodValid) {
+	// 		return commonService.generatePaymentMethodErrorResponse();
+	// 	} else if (!commonService.validateCurrency(reqJsonObject.getJSONObject("amount").getString("currency"))) {
+	// 		return commonService.generateCurrencyErrorResponse();
+	// 	} else if (!commonService.validateCvc(reqJsonObject.getJSONObject("paymentMethod").getString("cvc"))) {
+	// 		return commonService.generateCvcErrorResponse();
+	// 	} else if (!commonService.validateCardNumber(reqJsonObject.getJSONObject("paymentMethod").getString("number"))) {
+	// 		return commonService.generateCardNumberErrorResponse();
+	// 	} else if (!commonService.validateCardExpiry(reqJsonObject)) {
+	// 		return commonService.generateExpiredCardErrorResponse(reqJsonObject);
+	// 	}
+	// 	return commonService.generatePaymentSuccessResponse(reqJsonObject);
+	// }
 	
 }
