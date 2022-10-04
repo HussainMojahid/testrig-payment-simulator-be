@@ -24,8 +24,8 @@ public class Req {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
-    @Column(length = 10000)
+    @Column(columnDefinition = "TEXT")
     String request;
-    @Column(length = 10000)
+    @Column(columnDefinition = "TEXT")
     String response;
 }

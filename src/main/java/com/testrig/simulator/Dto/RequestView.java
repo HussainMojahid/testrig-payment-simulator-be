@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestView {
 
-
     Object request;
     Object response;
-    
+
 }
